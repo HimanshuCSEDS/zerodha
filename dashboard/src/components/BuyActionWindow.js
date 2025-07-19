@@ -9,7 +9,7 @@ const BuyActionWindow = ({ uid }) => {
 
   const handleBuyClick = () => {
     axios
-      .post("https://zerodha-p7ez.onrender.com/newOrder", {
+      .post("http://localhost:3002/newOrder", {
         name: uid,
         qty: stockQuantity,
         price: stockPrice,
