@@ -1,29 +1,49 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Signup() {
+const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post("https://zerodha-p7ez.onrender.com/signup", {
+        email,
+        password,
+      });
+
+      alert(res.data.message || "Signup successful!");
+      // Redirect to dashboard
+      window.location.href = "https://zerodha-frontend.onrender.com"; // or your dashboard route
+    } catch (err) {
+      alert(err.response?.data?.message || "Signup failed");
+    }
+  };
+
   return (
-    <div className="container mt-5">
+    <form onSubmit={handleSubmit}>
       <h2>Signup</h2>
-      <form>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" placeholder="Enter your name" />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" placeholder="Enter your email" />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" id="password" placeholder="Enter your password" />
-        </div>
-
-        <button type="submit" className="btn btn-primary">Sign Up</button>
-      </form>
-    </div>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        required
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        required
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Sign Up</button>
+    </form>
   );
-}
+};
 
 export default Signup;
