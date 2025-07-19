@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema({
 const UserModel = mongoose.model("User", userSchema);
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT;
+
+if (!PORT) {
+  throw new Error("❌ process.env.PORT is not defined! Render requires this.");
+}
+
 const uri = process.env.MONGO_URL;
 
 app.use(cors());
@@ -24,13 +29,13 @@ app.use(bodyParser.json());
 
 // MongoDB connection
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(uri, {})
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // === ROUTES ===
 
-// Root route (Fix for "Cannot GET /")
+// Root route to avoid "Cannot GET /"
 app.get("/", (req, res) => {
   res.send("Zerodha Clone Backend is Running 🚀");
 });
