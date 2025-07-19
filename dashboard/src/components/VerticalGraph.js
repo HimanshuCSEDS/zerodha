@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+// Register chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -19,15 +20,17 @@ ChartJS.register(
   Legend
 );
 
+// Configuration for horizontal bar chart
 export const options = {
   responsive: true,
+  indexAxis: "y", // 🔥 This makes the bar chart horizontal
   plugins: {
     legend: {
       position: "top",
     },
     title: {
       display: true,
-      text: "Holdings",
+      text: "Holdings (Horizontal Bar Chart)",
     },
   },
 };
