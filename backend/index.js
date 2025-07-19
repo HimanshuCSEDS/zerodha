@@ -30,6 +30,11 @@ mongoose
 
 // === ROUTES ===
 
+// Root route (Fix for "Cannot GET /")
+app.get("/", (req, res) => {
+  res.send("Zerodha Clone Backend is Running 🚀");
+});
+
 // Signup
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
